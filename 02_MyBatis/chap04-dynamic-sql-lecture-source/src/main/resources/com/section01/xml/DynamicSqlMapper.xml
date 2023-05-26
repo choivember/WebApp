@@ -1,0 +1,63 @@
+<mapper>
+    <select id="searchMenuByCategory" parameterType="SearchCriteria" resultMap="menuResultMap">
+        SELECT MENU_CODE
+        ,MENU_NAME
+        ,MENU_PRICE
+        ,CATEGORY_CODE
+        ,ORDERABLE_STATUS
+
+    </select>
+
+    <select id="searchMenuByNameOrCategory" parameterType="hashMap" resultMap="menuResultMap">
+        SELECT
+        A.MENU_CODE
+        , A.MENU_NAME
+        , A.CATEGORY_CODE
+        , A.ORDERABLE_STATUS
+        FROM TBL_MENU A
+        <!--
+        <if test="nameValue != null">
+            WHERE MENU_NAME = #{ nameValue }
+        </if>
+        <if test="categoryValue != null">
+            AND CATEGORY_CODE = #{ categoryCode }
+        </if>
+        -->
+        <!--
+        <where>
+            <if test="nameValue != null">
+                MENU_NAME = #{ nameValue }
+            </if>
+            <if test="categoryValue != null">
+                AND CATEGORY_CODE = #{ categoryCode }
+            </if>
+        </where>
+        -->
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="nameValue != null">
+                <bind name="namePattern" value="'%' + _parameter.get('nameValue') + '%'" />
+                <!-- MENU_NAME LIKE CONCAT('%', #{ nameValue }, '%') -->
+                MENU_NAME LIKE #{ namePattern }
+            </if>
+            <if test="categoryValue != null">
+                AND CATEGORY_CODE = #{ categoryCode }
+            </if>
+        </trim>
+    </select>
+
+    <update id="modifyMenu" parameterType="hashMap">
+        UPDATE TBL_MENU
+        <set>
+            <if test="name != null and name != ''">
+                SET MENU_NAME = #{ name }
+            </if>
+            <if test="categoryCode != null and categoryCode != ''">
+                ,CATEGORY_CODE = #{ categoryCode }
+            </if>
+            <if test="orderableStatus != null and orderableStatus != ''">
+                ,ORDERABLE_STATUS = #{ orderableStatus }
+            </if>
+        </set>
+        WHERE MENU_CODE = #{ menuCode }
+    </update>
+</mapper>
