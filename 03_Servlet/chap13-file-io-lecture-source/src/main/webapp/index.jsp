@@ -5,9 +5,10 @@
     <title>JSP - Hello World</title>
 </head>
 <body>
-<h1><%= "Hello World!" %>
-</h1>
-<br/>
-<a href="hello-servlet">Hello Servlet</a>
+<form action="cos/many" method="post" enctype="multipart/form-data">
+    <input type="file" name="first"><br>
+    <input type="file" name="second"><br>
+    <input type=""
+</form>
 </body>
 </html>
