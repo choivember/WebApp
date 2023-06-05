@@ -1,4 +1,4 @@
-package com.chap01;
+package com.chap02;
 
 import java.io.*;
 import javax.servlet.http.*;
