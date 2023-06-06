@@ -14,5 +14,25 @@
 <br>
 <p id="result"></p>
 
+<script>
+    $("#sendServer").click(function(){
+        const name = $("param").val();
+        $.ajax({
+            url: "/chap02/jquery",
+            data: { name : name },
+            method: "GET",
+            success: function(data, textStatus, xhr) {
+                $("#result").text(data);
+                console.log(textStatus);
+                console.log(xhr);
+            },
+            error: function (xhr, status, error){
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+            }
+        });
+    });
+</script>
 </body>
 </html>
